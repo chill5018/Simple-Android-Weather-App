@@ -17,6 +17,8 @@ public class Current {
     private double precipChance;
     private String summary;
     private String timeZone;
+    private long sunrise;
+    private long sunset;
 
 
     public String getTimeZone() {
@@ -88,8 +90,43 @@ public class Current {
         this.time = time;
     }
 
+
+
+    public void setSunrise(long sunrise) {
+        this.sunrise = sunrise;
+    }
+
+    public long getSunrise() {
+        return sunrise;
+    }
+
+    public long getSunset() {
+        return sunset;
+    }
+
+    public void setSunset(long sunset) {
+        this.sunset = sunset;
+    }
+
+    public String getSunriseFormatted() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        formatter.setTimeZone(TimeZone.getTimeZone(getTimeZone()));
+
+        Date dateTime = new Date(getSunrise() * 1000);
+        return formatter.format(dateTime);
+    }
+
+    public String getSunsetFormatted() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        formatter.setTimeZone(TimeZone.getTimeZone(getTimeZone()));
+
+        Date dateTime = new Date(getSunset() * 1000);
+        return formatter.format(dateTime);
+    }
+
     public int getTemperature() {
-        return (int) Math.round(temperature);
+
+        return (int) Math.round((temperature-32)/1.80);
     }
 
     public void setTemperature(double temperature) {
@@ -119,4 +156,6 @@ public class Current {
     public void setSummary(String summary) {
         this.summary = summary;
     }
+
+
 }

@@ -1,5 +1,9 @@
 package com.colinwhill.myweather.app.Weather;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 /**
  * Created by colinhill on 11/25/15.
  */
@@ -75,5 +79,21 @@ public class Daily {
 
     public void setSunset(long sunset) {
         this.sunset = sunset;
+    }
+
+    public String getSunriseFormatted() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        formatter.setTimeZone(TimeZone.getTimeZone(getTimezone()));
+
+        Date dateTime = new Date(getSunrise() * 1000);
+        return formatter.format(dateTime);
+    }
+
+    public String getSunsetFormatted() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        formatter.setTimeZone(TimeZone.getTimeZone(getTimezone()));
+
+        Date dateTime = new Date(getSunset() * 1000);
+        return formatter.format(dateTime);
     }
 }

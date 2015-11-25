@@ -1,6 +1,7 @@
 package com.colinwhill.myweather.app.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -31,6 +32,7 @@ public class WeatherActivity extends Activity {
 
     private Forecast forecast;
 
+// Bind the Elements to the View using Butter Knife
     @Bind(R.id.timeLabel) TextView timeLabel;
     @Bind(R.id.temperatureLabel) TextView temperatureLabel;
     @Bind(R.id.humidityValue) TextView humidityValue;
@@ -39,6 +41,8 @@ public class WeatherActivity extends Activity {
     @Bind(R.id.iconImageView) ImageView iconImageView;
     @Bind(R.id.refreshImageView) ImageView refreshImageView;
     @Bind(R.id.progressBar) ProgressBar progressBar;
+    @Bind(R.id.sunriseLabel) TextView sunriseLabel;
+    @Bind(R.id.sunsetLabel) TextView sunsetLabel;
 
 
     @Override
@@ -55,9 +59,7 @@ public class WeatherActivity extends Activity {
         refreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 getForecast(lat, lon);
-
             }
         });
 
@@ -151,11 +153,14 @@ public class WeatherActivity extends Activity {
     }
 
     private void updateDisplay() {
+        // This updates the view with the newly assigned values
         temperatureLabel.setText(forecast.getCurrent().getTemperature()+"");
-        timeLabel.setText(forecast.getCurrent().getFormattedTime()+" it will be");
+        timeLabel.setText(forecast.getCurrent().getFormattedTime()+"");
         humidityValue.setText(forecast.getCurrent().getHumidity()+"%");
         precipValue.setText(forecast.getCurrent().getPrecipChance()+"%");
         summaryLabel.setText(forecast.getCurrent().getSummary());
+        sunriseLabel.setText(forecast.getCurrent().getSunriseFormatted()+"");
+        sunsetLabel.setText(forecast.getCurrent().getSunsetFormatted()+"");
 
         Drawable drawable = getResources().getDrawable(forecast.getCurrent().getIconId());
         iconImageView.setImageDrawable(drawable);
@@ -177,23 +182,23 @@ public class WeatherActivity extends Activity {
     private Daily[] getDailyForecast(String jsonData) throws JSONException{
         JSONObject forecast = new JSONObject(jsonData);
         String timezone= forecast.getString("timezone");
-        JSONObject hourly = forecast.getJSONObject("hourly");
-        JSONArray data =  hourly.getJSONArray("data");
+        JSONObject day = forecast.getJSONObject("daily");
+        JSONArray data =  day.getJSONArray("data");
 
         Daily[] dayArray = new Daily[data.length()];
 
         for (int i = 0; i < data.length(); i++){
-            JSONObject jsonHour = data.getJSONObject(i);
+            JSONObject jsonDay = data.getJSONObject(i);
 
             Daily daily = new Daily();
 
-            daily.setTime(jsonHour.getLong("time"));
-            daily.setTempMax(jsonHour.getDouble("temperatureMax"));
-            daily.setTempMin(jsonHour.getDouble("temperatureMin"));
-            daily.setSunrise(jsonHour.getLong("sunriseTime"));
-            daily.setSunset(jsonHour.getLong("sunsetTime"));
-            daily.setIcon(jsonHour.getString("icon"));
-            daily.setSummary(jsonHour.getString("summary"));
+            daily.setTime(jsonDay.getLong("time"));
+            daily.setTempMax(jsonDay.getDouble("temperatureMax"));
+            daily.setTempMin(jsonDay.getDouble("temperatureMin"));
+            daily.setSunrise(jsonDay.getLong("sunriseTime"));
+            daily.setSunset(jsonDay.getLong("sunsetTime"));
+            daily.setIcon(jsonDay.getString("icon"));
+            daily.setSummary(jsonDay.getString("summary"));
             daily.setTimezone(timezone);
 
             dayArray[i] = daily;
@@ -233,6 +238,7 @@ public class WeatherActivity extends Activity {
         Log.i(TAG, "From JSON: "+timeZone);
 
         JSONObject currently = forecast.getJSONObject("currently");
+        Daily[] d = getDailyForecast(jsonData);
 
         Current current = new Current();
         current.setHumidity(currently.getDouble("humidity"));
@@ -241,7 +247,12 @@ public class WeatherActivity extends Activity {
         current.setPrecipChance(currently.getDouble("precipProbability"));
         current.setIcon(currently.getString("icon"));
         current.setSummary(currently.getString("summary"));
+        current.setSunrise(d[0].getSunrise());
+        current.setSunset(d[0].getSunset());
         current.setTimeZone(timeZone);
+
+
+
 
         Log.d(TAG, current.getFormattedTime());
 
@@ -265,6 +276,14 @@ public class WeatherActivity extends Activity {
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error dialog");
+    }
+
+
+    @OnClick (R.id.dailyButton)
+    public void startDailyActivity(View view) {
+        Intent intent = new Intent(this, DailyForecastActivity.class);
+        startActivity(intent);
+
     }
 
 }
