@@ -49,6 +49,8 @@ public class WeatherActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        // Bind the elements to the view (Create the View)
         ButterKnife.bind(this);
 
         progressBar.setVisibility(View.INVISIBLE);
@@ -77,13 +79,12 @@ public class WeatherActivity extends Activity {
 
         // Check for network connection
         if (isNetworkAvailable()) {
-
             toggleRefresh();
 
             // Set the Client for the Request
             OkHttpClient client = new OkHttpClient();
 
-            // Set the request URL
+            // Set the request to the apiURL
             Request request = new Request.Builder()
                     .url(forecastURL)
                     .build();
@@ -121,9 +122,8 @@ public class WeatherActivity extends Activity {
                                 }
                             });
 
-
-
                         } else {
+                            // Code for when Connection is Not Successful
                             alertUserAboutError();
                         }
                     } catch (IOException e) {
@@ -168,13 +168,12 @@ public class WeatherActivity extends Activity {
     }
 
     private Forecast parseForecast(String jsonData) throws JSONException {
+        //A Complete Forecast includes, current weather, hourly, and 7 day outlook
         Forecast forecast = new Forecast();
 
         forecast.setCurrent(getCurrentDetails(jsonData));
         forecast.setHourlyForcast(getHourlyForecast(jsonData));
         forecast.setDailyForcasts(getDailyForecast(jsonData));
-
-
 
         return forecast;
     }
@@ -251,15 +250,13 @@ public class WeatherActivity extends Activity {
         current.setSunset(d[0].getSunset());
         current.setTimeZone(timeZone);
 
-
-
-
         Log.d(TAG, current.getFormattedTime());
 
         return current;
 
     }
 
+    // Sufficient Test for Network Availability
     private boolean isNetworkAvailable() {
         ConnectivityManager manager =
                 (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
@@ -279,11 +276,20 @@ public class WeatherActivity extends Activity {
     }
 
 
+    // Using Butter Knife and the On-Click Attribut to link the Daily Button to the View
     @OnClick (R.id.dailyButton)
     public void startDailyActivity(View view) {
+        // This initiates the Daily view when the button is clicked
         Intent intent = new Intent(this, DailyForecastActivity.class);
         startActivity(intent);
 
+    }
+
+    @OnClick (R.id.hourlyButton)
+    public void startHourlyActivity(View view){
+
+        Intent intent = new Intent(this, HourlyForecastActivity.class);
+        startActivity(intent);
     }
 
 }
