@@ -3,6 +3,7 @@ package com.colinwhill.myweather.app.Weather;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by colinhill on 11/25/15.
@@ -33,16 +34,16 @@ public class Daily {
         this.summary = summary;
     }
 
-    public double getTempMax() {
-        return tempMax;
+    public int getTempMax() {
+        return (int) Math.round((tempMax-32)/1.80);
     }
 
     public void setTempMax(double temperature) {
         this.tempMax = temperature;
     }
 
-    public double getTempMin() {
-        return tempMin;
+    public int getTempMin() {
+        return (int) Math.round((tempMin-32)/1.80);
     }
 
     public void setTempMin(double temperature) {
@@ -79,6 +80,20 @@ public class Daily {
 
     public void setSunset(long sunset) {
         this.sunset = sunset;
+    }
+
+    public int getIconId(){
+        return Forecast.getIconId(icon);
+    }
+
+    public String getDOTW(){
+
+        SimpleDateFormat formatter= new SimpleDateFormat("EEEE");
+        formatter.setTimeZone(TimeZone.getTimeZone(timezone));
+
+        Date dateTime = new Date(time * 1000); // In sec need millisec so * 1000
+
+        return formatter.format(dateTime);
     }
 
     public String getSunriseFormatted() {
