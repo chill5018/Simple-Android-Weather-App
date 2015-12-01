@@ -1,5 +1,8 @@
 package com.colinwhill.myweather.app.Weather;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -8,7 +11,7 @@ import java.util.logging.SimpleFormatter;
 /**
  * Created by colinhill on 11/25/15.
  */
-public class Daily {
+public class Daily implements Parcelable{
     private long time;
     private String summary;
     private double tempMax;
@@ -111,4 +114,49 @@ public class Daily {
         Date dateTime = new Date(getSunset() * 1000);
         return formatter.format(dateTime);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    // Packages to a parcel
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(time);
+        dest.writeString(summary);
+        dest.writeString(icon);
+        dest.writeString(timezone);
+        dest.writeDouble(tempMax);
+        dest.writeDouble(tempMin);
+    }
+
+    // Need to Unwrap the parcel
+    //must be set in the same order
+    private Daily (Parcel in){
+        time = in.readLong();
+        summary = in.readString();
+        icon = in.readString();
+        timezone = in.readString();
+        tempMax = in.readDouble();
+        tempMin = in.readDouble();
+
+    }
+
+    public Daily () {
+
+    }
+
+    public static final Creator<Daily> CREATOR = new Creator<Daily>() {
+        @Override
+        public Daily createFromParcel(Parcel source) {
+            return new Daily(source);
+        }
+
+        @Override
+        public Daily[] newArray(int size) {
+            return new Daily[size];
+        }
+    };
 }

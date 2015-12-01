@@ -40,7 +40,7 @@ public class DayAdapter extends BaseAdapter {
 
     // This is the method that is used for recycling the list cells to make the application scroll
     // as smooth as possible and be very efficient
-    // Conver vert view is the recycling view that gets called
+    // Convert  view is the recycling view that gets called
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;

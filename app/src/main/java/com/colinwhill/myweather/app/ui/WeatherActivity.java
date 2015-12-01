@@ -29,6 +29,7 @@ import java.io.IOException;
 public class WeatherActivity extends Activity {
 
     public static final String TAG = WeatherActivity.class.getSimpleName();
+    public static final String DAILY_FORECAST = "DAILY_FORECAST";
 
     private Forecast forecast;
 
@@ -281,6 +282,7 @@ public class WeatherActivity extends Activity {
     public void startDailyActivity(View view) {
         // This initiates the Daily view when the button is clicked
         Intent intent = new Intent(this, DailyForecastActivity.class);
+        intent.putExtra(DAILY_FORECAST, forecast.getDailyForcasts());
         startActivity(intent);
 
     }
