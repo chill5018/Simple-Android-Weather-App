@@ -11,4 +11,5 @@
     <string name="no_daily_forecast_data">There is no data to display.</string>
     <string name="title_activity_hourly_forecast">Hourly Forecast</string>
     <string name="Daily_Weather_Forecasts">7-Day Weather Forecast</string>
+    <string name="title_activity_add_location">AddLocationActivity</string>
 </resources>

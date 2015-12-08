@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,6 @@ import com.squareup.okhttp.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 
 public class WeatherActivity extends AppCompatActivity {
@@ -35,6 +35,7 @@ public class WeatherActivity extends AppCompatActivity {
     public static final String HOURLY_FORECAST = "HOURLY_FORECAST";
 
     private Forecast forecast;
+    private SwipeRefreshLayout swipeLayout;
 
 // Bind the Elements to the View using Butter Knife
     @Bind(R.id.timeLabel) TextView timeLabel;
@@ -60,6 +61,8 @@ public class WeatherActivity extends AppCompatActivity {
 
         final double lat = 55.6761;
         final double lon = 12.5683;
+
+        // I need a method call that produces a GPS Coordinate For the GetForecast Method
 
         refreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
