@@ -37,6 +37,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.colinwhill.myweather.app.ui.WeatherActivity" />
         </activity>
+        <activity
+            android:name=".ui.HistoricalWeatherActivity"
+            android:label="@string/title_activity_historical_weather"
+            android:parentActivityName=".ui.WeatherActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.colinwhill.myweather.app.ui.WeatherActivity" />
+        </activity>
     </application>
 
 </manifest>

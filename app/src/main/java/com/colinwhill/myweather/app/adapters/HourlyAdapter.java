@@ -2,18 +2,14 @@ package com.colinwhill.myweather.app.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.colinwhill.myweather.app.R;
-import com.colinwhill.myweather.app.Weather.Daily;
 import com.colinwhill.myweather.app.Weather.Hourly;
-import org.w3c.dom.Text;
 
 /**
  * Created by colinhill on 12/7/15.
@@ -73,7 +69,7 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourViewHo
 
          timeLabel = (TextView) itemView.findViewById(R.id.timeLabel);
          summaryLabel = (TextView) itemView.findViewById(R.id.summaryLabel);
-         temperatureLabel = (TextView) itemView.findViewById(R.id.temperatureLabel);
+         temperatureLabel = (TextView) itemView.findViewById(R.id.tempMaxLabel);
          iconImageView = (ImageView) itemView.findViewById(R.id.iconImageView);
 
          // Set the Onclick listener for th recycler view

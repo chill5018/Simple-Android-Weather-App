@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="---"
-            android:id="@+id/temperatureLabel"
+            android:id="@+id/tempMaxLabel"
             android:textColor="#FFF" android:textSize="150sp"
             android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
 
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/degreeImage"
             android:src="@drawable/degree"
-            android:layout_alignTop="@+id/temperatureLabel" android:layout_toEndOf="@+id/temperatureLabel"
+            android:layout_alignTop="@+id/tempMaxLabel" android:layout_toEndOf="@+id/tempMaxLabel"
             android:layout_marginTop="50dp"/>
     <TextView
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             android:id="@+id/iconImageView"
             android:src="@drawable/snow"
             android:paddingRight="5dp"
-            android:layout_above="@+id/temperatureLabel" android:layout_centerHorizontal="true"
+            android:layout_above="@+id/tempMaxLabel" android:layout_centerHorizontal="true"
             android:layout_below="@+id/summaryLabel"/>
     <TextView
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout"
-            android:layout_above="@+id/temperatureLabel" android:layout_alignParentStart="true">
+            android:layout_above="@+id/tempMaxLabel" android:layout_alignParentStart="true">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true" android:id="@+id/linearLayout2"
-            android:layout_below="@+id/temperatureLabel">
+            android:layout_below="@+id/tempMaxLabel">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"

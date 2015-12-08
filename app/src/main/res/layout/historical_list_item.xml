@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              tools:background="@drawable/bg_gradient" android:weightSum="1">
+
+
+
+
+    <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            tools:text="1987"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:id="@+id/yearLabel" android:textColor="#FFFFFF" android:textSize="24sp"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tempMaxLabel" android:textSize="24sp" android:textColor="#ff0000"
+            tools:text="100"
+            android:textStyle="bold" android:layout_centerVertical="true" android:layout_toStartOf="@+id/tempMinLabel"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/summaryLabel" android:textColor="#FFFFFF"
+            tools:text="It was sunny"
+            android:layout_centerVertical="true" android:layout_toEndOf="@+id/yearLabel"
+            android:gravity="center_horizontal" android:layout_toLeftOf="@+id/tempMaxLabel"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tempMinLabel" android:layout_centerVertical="true" android:layout_alignParentEnd="true"
+            android:textColor="#7f82ff" android:textSize="20sp"
+            tools:text="100"/>
+
+</RelativeLayout>

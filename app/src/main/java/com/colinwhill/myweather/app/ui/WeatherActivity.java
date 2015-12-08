@@ -18,28 +18,27 @@ import butterknife.Bind;
 import butterknife.*;
 //import com.colinwhill.myweather.app.R;
 import com.colinwhill.myweather.app.R;
-import com.colinwhill.myweather.app.Weather.Current;
-import com.colinwhill.myweather.app.Weather.Daily;
-import com.colinwhill.myweather.app.Weather.Forecast;
-import com.colinwhill.myweather.app.Weather.Hourly;
+import com.colinwhill.myweather.app.Weather.*;
 import com.squareup.okhttp.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.Date;
 
 public class WeatherActivity extends AppCompatActivity {
 
     public static final String TAG = WeatherActivity.class.getSimpleName();
     public static final String DAILY_FORECAST = "DAILY_FORECAST";
     public static final String HOURLY_FORECAST = "HOURLY_FORECAST";
+    public static final String HISTORICAL_FORECAST = "HISTORICAL_FORECAST";
 
     private Forecast forecast;
     private SwipeRefreshLayout swipeLayout;
 
 // Bind the Elements to the View using Butter Knife
     @Bind(R.id.timeLabel) TextView timeLabel;
-    @Bind(R.id.temperatureLabel) TextView temperatureLabel;
+    @Bind(R.id.tempMaxLabel) TextView temperatureLabel;
     @Bind(R.id.humidityValue) TextView humidityValue;
     @Bind(R.id.precipValue) TextView precipValue;
     @Bind(R.id.summaryLabel) TextView summaryLabel;
@@ -61,17 +60,19 @@ public class WeatherActivity extends AppCompatActivity {
 
         final double lat = 55.6761;
         final double lon = 12.5683;
+        final long epoch = System.currentTimeMillis()/1000;
+
 
         // I need a method call that produces a GPS Coordinate For the GetForecast Method
 
         refreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getForecast(lat, lon);
+                getForecast(lat, lon, epoch);
             }
         });
 
-        getForecast(lat, lon);
+        getForecast(lat, lon, epoch);
 
     Log.d(TAG, "Main UI code is Running");
 
@@ -79,7 +80,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     // This method is now ready to take the lat and long of a declared location and present that information to the user
-    private void getForecast(double lat, double lon) {
+    private void getForecast(double lat, double lon, long epoch) {
         String apiKey = "4f8b93aa111efce8f04cf7b64fbe1464";
         String forecastURL = "https://api.forecast.io/forecast/" + apiKey + "/" +lat+ "," + lon;
 
@@ -233,6 +234,35 @@ public class WeatherActivity extends AppCompatActivity {
             hourArray[i] = hour;
         }
         return hourArray;
+    }
+
+    private Historical[] getHistoricalForeCast(){
+
+        String timezone= forecast.getString("timezone");
+        JSONObject day = forecast.getJSONObject("daily");
+        JSONArray data =  day.getJSONArray("data");
+
+        long epoch = System.currentTimeMillis()/1000;
+        long epochYr = 31556926;
+
+
+        Historical[] historicalArray = new Historical[30];
+        for (int i = 0; i <= historicalArray.length; i++){
+            epoch -= epochYr;
+
+            Historical year = new Historical();
+
+            year.setTime();
+            year.setSummary();
+            year.setTempMax();
+            year.setTempMin();
+
+
+            historicalArray[i] = year;
+
+            System.out.println(epoch);
+
+        }
     }
 
     private Current getCurrentDetails(String jsonData) throws JSONException{

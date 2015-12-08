@@ -12,4 +12,5 @@
     <string name="title_activity_hourly_forecast">Hourly Forecast</string>
     <string name="Daily_Weather_Forecasts">7-Day Weather Forecast</string>
     <string name="title_activity_add_location">AddLocationActivity</string>
+    <string name="title_activity_historical_weather">HistoricalWeatherActivity</string>
 </resources>
