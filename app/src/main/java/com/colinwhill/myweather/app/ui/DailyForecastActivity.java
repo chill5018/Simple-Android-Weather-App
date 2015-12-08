@@ -1,13 +1,9 @@
 package com.colinwhill.myweather.app.ui;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import com.colinwhill.myweather.app.R;
 import com.colinwhill.myweather.app.Weather.Daily;
 import com.colinwhill.myweather.app.adapters.DayAdapter;

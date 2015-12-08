@@ -1,11 +1,12 @@
 package com.colinwhill.myweather.app.ui;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.*;
+//import com.colinwhill.myweather.app.R;
 import com.colinwhill.myweather.app.R;
 import com.colinwhill.myweather.app.Weather.Current;
 import com.colinwhill.myweather.app.Weather.Daily;
@@ -26,10 +28,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class WeatherActivity extends Activity {
+public class WeatherActivity extends AppCompatActivity {
 
     public static final String TAG = WeatherActivity.class.getSimpleName();
     public static final String DAILY_FORECAST = "DAILY_FORECAST";
+    public static final String HOURLY_FORECAST = "HOURLY_FORECAST";
 
     private Forecast forecast;
 
@@ -44,7 +47,6 @@ public class WeatherActivity extends Activity {
     @Bind(R.id.progressBar) ProgressBar progressBar;
     @Bind(R.id.sunriseLabel) TextView sunriseLabel;
     @Bind(R.id.sunsetLabel) TextView sunsetLabel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,8 +291,8 @@ public class WeatherActivity extends Activity {
 
     @OnClick (R.id.hourlyButton)
     public void startHourlyActivity(View view){
-
         Intent intent = new Intent(this, HourlyForecastActivity.class);
+        intent.putExtra(HOURLY_FORECAST, forecast.getHourlyForcast());
         startActivity(intent);
     }
 
