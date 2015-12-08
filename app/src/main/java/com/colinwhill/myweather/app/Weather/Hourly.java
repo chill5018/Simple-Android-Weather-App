@@ -59,7 +59,7 @@ public class Hourly implements Parcelable{
     // #9 in the Hourly Adapter
     public String getHour(){
         // They use "h a"
-        SimpleDateFormat formatter = new SimpleDateFormat("HH");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 
         Date dateTime = new Date(getTime() * 1000);
         return formatter.format(dateTime);

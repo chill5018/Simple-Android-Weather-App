@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.colinwhill.myweather.app.R;
 import com.colinwhill.myweather.app.Weather.Daily;
 import com.colinwhill.myweather.app.Weather.Hourly;
+import org.w3c.dom.Text;
 
 /**
  * Created by colinhill on 12/7/15.
@@ -22,10 +24,13 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourViewHo
 
     // 13. Create Member variable to hold the Array
     private Hourly[] hours;
+    private Context context;
 
     // 12. Need a Constructor
-    public HourlyAdapter(Hourly[] hours){
+    public HourlyAdapter(Context context, Hourly[] hours ){
+        this.context = context;
         this.hours = hours;
+
     }
 
     // 4. Auto Implement methods
@@ -52,7 +57,8 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourViewHo
         return hours.length;
     }
 // 2. Create the View Holder for Recycler View
-    public class HourViewHolder extends RecyclerView.ViewHolder{
+    public class HourViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
 
     // 5. Set the Layout
 
@@ -69,6 +75,9 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourViewHo
          summaryLabel = (TextView) itemView.findViewById(R.id.summaryLabel);
          temperatureLabel = (TextView) itemView.findViewById(R.id.temperatureLabel);
          iconImageView = (ImageView) itemView.findViewById(R.id.iconImageView);
+
+         // Set the Onclick listener for th recycler view
+         itemView.setOnClickListener(this);
      }
 
     // 7. Map the data to the view --> Similar to the getView Method
@@ -86,5 +95,15 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourViewHo
 
     }
 
- }
+    @Override
+    public void onClick(View view) {
+        String time = timeLabel.getText().toString();
+        String temp = temperatureLabel.getText().toString();
+        String summary = summaryLabel.getText().toString();
+
+        String message = String.format("At %s the temperature will be %s, and %s", time, temp, summary);
+
+        Toast.makeText(context, message,Toast.LENGTH_LONG).show();
+    }
+}
 }
